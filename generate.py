@@ -6,7 +6,7 @@ import os
 ratio = 0.5
 
 # all pages in this site
-pages = ["brewing", "casting", "drama"]
+pages = ["brewing", "casting", "drama", "evening"]
 allpages = ["index"] + pages
 
 # read in contents of component pages
