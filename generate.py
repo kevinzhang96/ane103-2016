@@ -102,6 +102,10 @@ for page in pages:
         link += ".  Read their journal <a href=\"files/"
         link += page
         link += ".pdf\">here.</a></p>\n"
+        if page == "brewing":
+            link += "<p class=\"sidebar-p\">See their photo series "
+            link += "<a href=\"https://www.dropbox.com/sh/1m2is9zj9cvcaxv/AACPHh5y4Db3W9-5Y22iS2Jja?dl=0\">here.</a>"
+            link += "</p>\n"
         f.writelines(sidebar(page, link))
         f.writelines(lines["ps_start"])
         captions = {}
