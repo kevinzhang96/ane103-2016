@@ -9,6 +9,14 @@ ratio = 0.5
 pages = ["brewing", "casting", "drama", "evening"]
 allpages = ["index"] + pages
 
+# authors
+authors = {
+    "brewing": "Vanessa Li",
+    "casting": "Mustafa Bal",
+    "drama": "Kristen Fang",
+    "evening": "Matthew Ryan"
+}
+
 # read in contents of component pages
 lines = {}
 with open("components/header.html") as h:
@@ -97,5 +105,11 @@ for page in pages:
         for filename in os.listdir("img/" + page):
             if filename.endswith(".jpg"): 
                 f.writelines(image_box("img/" + page + "/" + filename, captions[filename]))
+        link = "<p style=\"text-align: center; margin: auto;\">Photos by "
+        link += authors[page]
+        link += ".  Read their journal <a href=\"files/"
+        link += page
+        link += ".pdf\">here.</a></p>"
+        f.writeline( + authors[page] + ".  Read their journal here: ")
         f.writelines(lines["ps_end"])
         f.writelines(lines["footer"])
