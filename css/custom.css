@@ -1,1 +1,20 @@
 /* your styles go here */
+.content-column-content p.lead {
+  color: #333333;
+}
+.content-column-content p,
+.content-column-content li {
+  color: #777777;
+}
+.box-masonry .box-masonry-text p {
+  color: #777777;
+}
+.sidebar-p {
+  color: #777777;
+}
+.sidebar-menu {
+  margin-bottom: 20px;
+}
+p.social {
+  margin-bottom: 15px;
+}

@@ -3,7 +3,7 @@ from random import random
 import os
 
 # proportion of hover boxes (vs. labeled boxes)
-ratio = 0.5
+ratio = 0
 
 # all pages in this site
 pages = ["brewing", "casting", "drama", "evening"]
@@ -29,6 +29,8 @@ with open("components/portfolio_end.html") as pe:
     lines["ps_end"] = pe.readlines()
 with open("components/sidebar_start.html") as sds:
     lines["sd_start"] = sds.readlines()
+with open("components/sidebar_mid.html") as sdm:
+    lines["sd_mid"] = sdm.readlines()
 with open("components/sidebar_end.html") as sde:
     lines["sd_end"] = sde.readlines()
 with open("components/image_box_p1.html") as p1:
@@ -55,6 +57,7 @@ def sidebar(curr_page, link=None):
             "</a></li>\n"
         ]
         sd_lines.append("".join(parts))
+    sd_lines += lines["sd_mid"]
     if link != None:
         sd_lines.append(link)
     sd_lines += lines["sd_end"]
@@ -87,7 +90,8 @@ def image_box(uri, caption):
     return sd_lines
 
 # create index page first
-with open("index.html", "ab+") as f:
+print "writing index.html"
+with open("index.html", "wb") as f:
     f.writelines(lines["header"])
     f.writelines(sidebar("index"))
     with open("components/index_body.html") as ib:
@@ -95,13 +99,13 @@ with open("index.html", "ab+") as f:
     f.writelines(lines["footer"])
 
 for page in pages:
-    with open(page + ".html", "ab+") as f:
+    print "writing " + page + ".html"
+    with open(page + ".html", "wb") as f:
         f.writelines(lines["header"])
-        link = "<br><p class=\"sidebar-p\">Photos by "
-        link += authors[page]
-        link += ".  Read their journal <a href=\"files/"
-        link += page
-        link += ".pdf\">here.</a></p>\n"
+        link = "<p class=\"sidebar-p\">\n"
+        link += "Photos by %s. " % authors[page]
+        link += "Read their journal <a href=\"files/%s.pdf\" target=\"_blank\">here.</a>\n" % page
+        link += "</p>\n"
         if page == "brewing":
             link += "<p class=\"sidebar-p\">See their photo series "
             link += "<a href=\"https://www.dropbox.com/sh/1m2is9zj9cvcaxv/AACPHh5y4Db3W9-5Y22iS2Jja?dl=0\">here.</a>"
@@ -118,3 +122,5 @@ for page in pages:
                 f.writelines(image_box("img/" + page + "/" + filename, captions[filename]))
         f.writelines(lines["ps_end"])
         f.writelines(lines["footer"])
+
+print "generate.py done"
