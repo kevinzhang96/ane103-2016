@@ -41,7 +41,7 @@ with open("components/image_box_p3.html") as p3:
     lines["p3"] = p3.readlines()
 
 # sidebar generator
-def sidebar(curr_page):
+def sidebar(curr_page, link=None):
     sd_lines = []
     sd_lines += lines["sd_start"]
     for page in allpages:
@@ -55,6 +55,8 @@ def sidebar(curr_page):
             "</a></li>\n"
         ]
         sd_lines.append("".join(parts))
+    if link != None:
+        sd_lines.append(link)
     sd_lines += lines["sd_end"]
     return sd_lines
 
@@ -95,7 +97,12 @@ with open("index.html", "ab+") as f:
 for page in pages:
     with open(page + ".html", "ab+") as f:
         f.writelines(lines["header"])
-        f.writelines(sidebar(page))
+        link = "<br><p class=\"sidebar-p\">Photos by "
+        link += authors[page]
+        link += ".  Read their journal <a href=\"files/"
+        link += page
+        link += ".pdf\">here.</a></p>\n"
+        f.writelines(sidebar(page, link))
         f.writelines(lines["ps_start"])
         captions = {}
         with open("img/" + page + "/captions.txt") as c:            
@@ -105,11 +112,5 @@ for page in pages:
         for filename in os.listdir("img/" + page):
             if filename.endswith(".jpg"): 
                 f.writelines(image_box("img/" + page + "/" + filename, captions[filename]))
-        link = "<p style=\"text-align: center; margin: auto;\">Photos by "
-        link += authors[page]
-        link += ".  Read their journal <a href=\"files/"
-        link += page
-        link += ".pdf\">here.</a></p>"
-        f.writeline( + authors[page] + ".  Read their journal here: ")
         f.writelines(lines["ps_end"])
         f.writelines(lines["footer"])
